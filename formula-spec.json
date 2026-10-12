@@ -1,0 +1,218 @@
+{
+  "executiveKpis": [
+    {
+      "cell": "D14",
+      "label": "TOTAL TEMUAN",
+      "formula": "=COUNTA('Data Register'!A:A)-1",
+      "js": "COUNT non-empty ID Issue records"
+    },
+    {
+      "cell": "L14",
+      "label": "STATUS: OPEN",
+      "formula": "=COUNTIF('Data Register'!L:L, \"Open\")",
+      "js": "count rows where Status Kerentanan === Open"
+    },
+    {
+      "cell": "P14",
+      "label": "STATUS: CLOSED",
+      "formula": "=COUNTIF('Data Register'!L:L, \"Close*\")",
+      "js": "count rows where Status Kerentanan starts with Close"
+    },
+    {
+      "cell": "T14",
+      "label": "RISIKO TINGGI (HIGH)",
+      "formula": "=COUNTIF('Data Register'!G:G, \"High\")",
+      "js": "count rows where Severity === High"
+    }
+  ],
+  "calc": [
+    [
+      "A2",
+      "High",
+      "B2",
+      "=COUNTIF('Data Register'!G:G, \"High\")"
+    ],
+    [
+      "A3",
+      "Medium",
+      "B3",
+      "=COUNTIF('Data Register'!G:G, \"Medium\")"
+    ],
+    [
+      "A4",
+      "Low",
+      "B4",
+      "=COUNTIF('Data Register'!G:G, \"Low\")"
+    ],
+    [
+      "D2",
+      "Open",
+      "E2",
+      "=COUNTIF('Data Register'!L:L, \"Open\")"
+    ],
+    [
+      "D3",
+      "Closed",
+      "E3",
+      "=COUNTIF('Data Register'!L:L, \"Close*\")"
+    ],
+    [
+      "G2",
+      "Dashboard SATUSEHAT",
+      "H2",
+      "=COUNTIF('Data Register'!C:C, \"Dashboard SATUSEHAT\")"
+    ],
+    [
+      "G3",
+      "KALKULATOR NUTRI CHECK",
+      "H3",
+      "=COUNTIF('Data Register'!C:C, \"KALKULATOR NUTRI CHECK\")"
+    ],
+    [
+      "G4",
+      "Aplikasi Android SATUSEHAT STAGING",
+      "H4",
+      "=COUNTIF('Data Register'!C:C, \"Aplikasi Android SATUSEHAT STAGING\")"
+    ],
+    [
+      "G5",
+      "SSRME API",
+      "H5",
+      "=COUNTIF('Data Register'!C:C, \"SSRME API\")"
+    ],
+    [
+      "G6",
+      "SIAKPEL",
+      "H6",
+      "=COUNTIF('Data Register'!C:C, \"SIAKPEL\")"
+    ],
+    [
+      "G7",
+      "Sertifikat LMS",
+      "H7",
+      "=COUNTIF('Data Register'!C:C, \"Sertifikat LMS\")"
+    ],
+    [
+      "G8",
+      "NAKULA",
+      "H8",
+      "=COUNTIF('Data Register'!C:C, \"NAKULA\")"
+    ],
+    [
+      "G9",
+      "SIAKSI",
+      "H9",
+      "=COUNTIF('Data Register'!C:C, \"SIAKSI\")"
+    ],
+    [
+      "J2",
+      "Application & Vulnerability Mgmt / Access Control",
+      "K2",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Access Control\")"
+    ],
+    [
+      "J3",
+      "Application & Vulnerability Mgmt / Security Config",
+      "K3",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Security Config\")"
+    ],
+    [
+      "J4",
+      "Application & Vulnerability Mgmt / Input Validation",
+      "K4",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Input Validation\")"
+    ],
+    [
+      "J5",
+      "Application & Vulnerability Mgmt / Secure Coding",
+      "K5",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Secure Coding\")"
+    ],
+    [
+      "J6",
+      "Application & Vulnerability Mgmt / Session Management",
+      "K6",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Session Management\")"
+    ],
+    [
+      "J7",
+      "Application & Vulnerability Mgmt / Supply Chain",
+      "K7",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Supply Chain\")"
+    ],
+    [
+      "J8",
+      "Application & Vulnerability Mgmt / Information Disclosure",
+      "K8",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Information Disclosure\")"
+    ],
+    [
+      "J9",
+      "Application & Vulnerability Mgmt / Architecture",
+      "K9",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Architecture\")"
+    ],
+    [
+      "J10",
+      "Application & Vulnerability Mgmt / Mobile Security",
+      "K10",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Mobile Security\")"
+    ],
+    [
+      "J11",
+      "Application & Vulnerability Mgmt / Network Security",
+      "K11",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Network Security\")"
+    ],
+    [
+      "J12",
+      "Application & Vulnerability Mgmt / Integration Security",
+      "K12",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Integration Security\")"
+    ],
+    [
+      "J13",
+      "Application & Vulnerability Mgmt / Secure Storage",
+      "K13",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Secure Storage\")"
+    ],
+    [
+      "J14",
+      "Application & Vulnerability Mgmt / Cryptography",
+      "K14",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Cryptography\")"
+    ],
+    [
+      "J15",
+      "Application & Vulnerability Mgmt / Error Handling",
+      "K15",
+      "=COUNTIF('Data Register'!F:F, \"Application & Vulnerability Mgmt / Error Handling\")"
+    ]
+  ],
+  "charts": [
+    {
+      "title": "Distribusi Tingkat Kerentanan",
+      "type": "column",
+      "categoryRange": "Calc!$A$2:$A$4",
+      "valueRange": "Calc!$B$2:$B$4"
+    },
+    {
+      "title": "Rasio Penyelesaian",
+      "type": "doughnut",
+      "categoryRange": "Calc!$D$2:$D$3",
+      "valueRange": "Calc!$E$2:$E$3"
+    },
+    {
+      "title": "Sistem / Aplikasi Terdampak",
+      "type": "bar",
+      "categoryRange": "Calc!$G$2:$G$9",
+      "valueRange": "Calc!$H$2:$H$9"
+    },
+    {
+      "title": "Area Kelemahan Kontrol",
+      "type": "bar",
+      "categoryRange": "Calc!$J$2:$J$15",
+      "valueRange": "Calc!$K$2:$K$15"
+    }
+  ]
+}

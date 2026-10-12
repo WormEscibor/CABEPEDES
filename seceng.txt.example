@@ -1,0 +1,12 @@
+# Template akun Security Engineer
+# Salin file ini menjadi seceng.txt, lalu isi password hash.
+# JANGAN commit seceng.txt ke repo.
+#
+# Format: Username dan Password (PBKDF2-HMAC-SHA256, generate via server.py --hash-password)
+# Contoh:
+#
+# Username: admin
+# Password: pbkdf2_sha256$600000$<salt>$<hash>
+
+Username: admin
+Password: GANTI_DENGAN_HASH_PASSWORD

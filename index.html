@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b746b">
+  <meta name="application-version" content="1.3.2">
+  <meta name="description" content="CABEPEDES — Central Audit & Bug Exploitation: Pentest Event Dashboard for Executive Summary">
+  <link rel="icon" type="image/png" sizes="32x32" href="Logo Browser.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="Logo Browser.png">
+  <title>CABEPEDES | Central Audit &amp; Bug Exploitation: Pentest Event Dashboard for Executive Summary</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app-shell" class="app-shell locked" aria-hidden="true">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-mark" aria-label="CABEPEDES logo"><img src="Logo CabePedes.png" alt="CABEPEDES"></div>
+        <div class="brand-copy">
+          <div class="eyebrow">KEMENTERIAN KESEHATAN REPUBLIK INDONESIA</div>
+          <div class="brand-title">Central Audit &amp; Bug Exploitation</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="login-status" class="session-pill">Belum login</span>
+        <span id="data-status" class="status-pill">Tersimpan lokal • memuat…</span>
+        <button class="notification-btn" id="notification-button" type="button" aria-label="Buka notifikasi">Notifikasi <span id="notification-badge" class="notification-badge hidden">0</span></button>
+        <button class="ghost-btn" id="logout-btn" type="button">Keluar</button>
+        <button class="ghost-btn engineer-only" id="reset-data" type="button" title="Kembalikan data awal workbook">Reset Workbook</button>
+        <button class="primary-btn engineer-only" id="add-record" type="button">+ Tambah Temuan</button>
+      </div>
+    </header>
+
+    <main>
+      <nav class="tabbar" aria-label="Navigasi aplikasi">
+        <button class="tab-btn active" data-tab="dashboard" type="button" data-audit="menu">Executive Dashboard</button>
+        <button class="tab-btn" data-tab="register" type="button" data-audit="menu">Data Register</button>
+        <button class="tab-btn engineer-only" data-tab="formula" type="button" data-audit="menu">Formula Audit</button>
+        <button class="tab-btn engineer-only" data-tab="security" type="button" data-audit="menu">Security Center</button>
+      </nav>
+
+      <section id="dashboard-tab" class="tab-panel active">
+        <section class="hero">
+          <div>
+            <div class="hero-kicker">REAL-TIME EXECUTIVE DASHBOARD</div>
+            <h1>CABEPEDES</h1>
+            <p class="hero-title-expanded">Central Audit &amp; Bug Exploitation: Pentest Event Dashboard for Executive Summary</p>
+            <p>Executive Summary untuk Aktivitas Penetration Testing</p>
+            <div class="hero-note">Laporan Interaktif Status Remediasi Celah (Penetration Testing) — Auto Update dari Data Register.</div>
+          </div>
+          <div class="hero-meta">
+            <span>Data aktif: <strong id="hero-count">0</strong> temuan</span>
+            <span>Server lokal Mac • sinkronisasi satu jaringan</span>
+            <time id="dashboard-clock" class="live-clock" aria-label="Tanggal dan waktu saat ini">Memuat waktu…</time>
+          </div>
+        </section>
+
+        <section class="kpi-grid" aria-label="KPI utama">
+          <article class="kpi-card"><div class="kpi-label">TOTAL TEMUAN</div><div id="kpi-total" class="kpi-value blue">0</div><div class="kpi-sub">COUNTA ID Issue − 1</div></article>
+          <article class="kpi-card"><div class="kpi-label">STATUS: OPEN</div><div id="kpi-open" class="kpi-value red">0</div><div class="kpi-sub">COUNTIF status = Open</div></article>
+          <article class="kpi-card"><div class="kpi-label">STATUS: CLOSED</div><div id="kpi-closed" class="kpi-value green">0</div><div class="kpi-sub">COUNTIF status = Close*</div></article>
+          <article class="kpi-card"><div class="kpi-label">RISIKO TINGGI (HIGH)</div><div id="kpi-high" class="kpi-value orange">0</div><div class="kpi-sub">COUNTIF severity = High</div></article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="chart-card"><div class="card-head"><h2>Distribusi Tingkat Kerentanan</h2><span class="muted">Calc!A2:B4</span></div><div id="severity-chart" class="chart-slot"></div></article>
+          <article class="chart-card"><div class="card-head"><h2>Rasio Penyelesaian</h2><span class="muted">Calc!D2:E3</span></div><div id="status-chart" class="chart-slot donut-slot"></div></article>
+          <article class="chart-card wide"><div class="card-head"><h2>Sistem / Aplikasi Terdampak</h2><span class="muted">Calc!G2:H9</span></div><div id="apps-chart" class="chart-slot horizontal"></div></article>
+          <article class="chart-card wide"><div class="card-head"><h2>Area Kelemahan Kontrol</h2><span class="muted">Calc!J2:K15</span></div><div id="domain-chart" class="chart-slot horizontal tall"></div></article>
+        </section>
+
+        <section class="insight-grid">
+          <article class="insight-card"><div class="card-head"><h2>Seluruh Aplikasi di Data Register</h2><span class="muted" id="all-app-count">0 aplikasi</span></div><div id="all-apps-table" class="mini-table"></div></article>
+          <article class="insight-card"><div class="card-head"><h2>Notifikasi &amp; Kualitas Data</h2><span class="muted">Ringkasan record aktif</span></div><div id="notification-table" class="mini-table"></div></article>
+        </section>
+      </section>
+
+      <section id="register-tab" class="tab-panel">
+        <section class="register-toolbar">
+          <div>
+            <div class="section-kicker">DATA REGISTER</div>
+            <h2>Pelaksanaan Pentest</h2>
+            <p>Seluruh kolom mengikuti struktur workbook: Kolom A — Kolom P.</p>
+            <p>Dashboard dihitung dari data ini secara real-time.</p>
+            <p class="register-filter-help">Gunakan <b>Bulan Temuan</b> untuk menyaring berdasarkan bulan Tanggal Temuan. Gunakan <b>Kolom</b> untuk menentukan data yang ditampilkan pada tabel.</p>
+          </div>
+          <div class="toolbar-actions">
+            <input id="search" type="search" placeholder="Cari ID, aplikasi, PIC, temuan…" aria-label="Cari data register">
+            <select id="filter-month" aria-label="Filter bulan temuan"><option value="">Semua Bulan</option></select>
+            <select id="filter-status" aria-label="Filter status"><option value="">Semua Status</option></select>
+            <select id="filter-severity" aria-label="Filter severity"><option value="">Semua Severity</option></select>
+            <div class="column-filter" id="column-filter">
+              <button class="ghost-btn column-filter-toggle" id="column-filter-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="column-filter-menu">Kolom <span id="selected-column-count">16/16</span></button>
+              <div id="column-filter-menu" class="column-filter-menu hidden" role="menu" aria-label="Pilih kolom Data Register">
+                <div class="column-filter-head"><div><strong>Pilih kolom</strong><span id="column-filter-summary" class="column-filter-summary">Semua kolom ditampilkan</span></div><button class="small-btn ghost-btn" id="column-filter-all" type="button">Pilih semua</button></div>
+                <div id="column-filter-options" class="column-filter-options"></div>
+              </div>
+            </div>
+            <button class="ghost-btn visitor-disabled engineer-only" id="export-csv" type="button">Export CSV</button>
+            <button class="ghost-btn visitor-disabled engineer-only" id="export-json" type="button">Backup JSON</button>
+            <button class="primary-btn visitor-disabled engineer-only" id="add-record-2" type="button">+ Tambah</button>
+          </div>
+        </section>
+        <div class="register-meta"><span id="register-count">0 record</span><span class="muted">Security Engineer: klik baris untuk edit. Visitor: mode baca-saja, detail temuan dinonaktifkan.</span></div>
+        <div class="table-wrap">
+          <table id="data-table" aria-label="Data Register">
+            <thead></thead><tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="formula-tab" class="tab-panel">
+        <section class="formula-intro"><div class="section-kicker">FORMULA AUDIT</div><h2>Rumus workbook yang direplikasi di aplikasi</h2><p>Formula Excel ditampilkan dalam bentuk aslinya. Engine dashboard menggunakan padanan deterministik dari record Data Register yang sama.</p></section>
+        <div class="formula-grid" id="formula-grid"></div>
+      </section>
+
+      <section id="security-tab" class="tab-panel">
+        <section class="security-grid">
+          <article class="security-card">
+            <div class="card-head"><div><div class="section-kicker">ACTIVE CLIENTS</div><h2>Perangkat yang sedang mengakses CABEPEDES</h2></div><button class="ghost-btn" id="refresh-clients" type="button">Muat Ulang</button></div>
+            <div class="active-note">Log audit merekam kegiatan menu, perubahan data, dan snapshot Active Clients tanpa menyimpan kata sandi. Koordinat menggunakan Geolocation API pada peramban dengan <b>enableHighAccuracy</b>. Ketepatan lokasi bergantung pada izin, perangkat, sensor, sistem operasi, jaringan, dan kondisi lingkungan.</div>
+            <div class="table-wrap compact"><table id="clients-table"><thead><tr><th>Nama Pengguna</th><th>Peran</th><th>IP</th><th>Nama Perangkat</th><th>Jenis</th><th>Lokasi</th><th>Sistem Operasi</th><th>Peramban</th><th>Sesi</th><th>Terakhir Aktif</th></tr></thead><tbody></tbody></table></div>
+          </article>
+          <article class="security-card network-card"><div class="section-kicker">NETWORK</div><h2>Akses jaringan</h2><p class="muted">CABEPEDES menggunakan server Python bawaan yang ringan. Browser pada Mac dibuka secara otomatis. Perangkat lain pada jaringan yang sama dapat mengakses melalui alamat IP Mac; HTTP port 1500 otomatis diarahkan ke HTTPS port 1501.</p><div id="network-info" class="network-box">Menunggu sesi aktif…</div></article>
+        </section>
+
+        <section class="audit-panel security-card">
+          <div class="card-head"><div><div class="section-kicker">LOG AUDIT KEAMANAN</div><h2>Log Keamanan</h2></div><div class="topbar-actions"><a class="ghost-btn engineer-only" id="open-audit-log" href="/log/security-audit.log" target="_blank" rel="noopener noreferrer">Buka sebagai Teks</a><button class="ghost-btn" id="refresh-audit-log" type="button">Muat Ulang</button></div></div>
+          <p class="audit-note">Log ini hanya dapat dilihat oleh Security Engineer. Data ditampilkan dari log runtime yang sedang digunakan server, termasuk lokasi cadangan apabila folder aplikasi tidak dapat ditulis. Kata sandi, token, dan rahasia tidak ditampilkan.</p>
+          <div id="audit-log-meta" class="audit-log-meta">Memuat informasi log…</div>
+          <div class="table-wrap audit-log-wrap"><table id="audit-log-table" aria-label="Log Audit Keamanan"><thead></thead><tbody><tr><td class="empty-cell">Belum ada data log yang dimuat.</td></tr></tbody></table></div>
+        </section>
+
+        <section class="release-panel security-card">
+          <div class="card-head"><div><div class="section-kicker">RELEASE NOTE</div><h2>Riwayat Fitur CABEPEDES</h2></div><span class="muted">Catatan perubahan dan pengembangan aplikasi</span></div>
+          <div class="release-grid">
+            <article class="release-card current"><div class="release-date">25 September 2026</div><h3>v1.3.2 — Penyaringan Bulan dan Pilihan Kolom Data Register</h3><p class="release-summary">Penyempurnaan Data Register agar data dapat disaring berdasarkan bulan dan kolom yang ditampilkan dapat dipilih sesuai kebutuhan.</p><ol id="release-v132"></ol></article>
+            <article class="release-card"><div class="release-date">24 September 2026</div><h3>v1.3.1 — Perbaikan Jaringan dan Kredensial</h3><p class="release-summary">Perbaikan akses dari perangkat lain pada jaringan yang sama serta pemuatan akun baru dari <code>visitor.txt</code> dan <code>seceng.txt</code>.</p><ol id="release-v131"></ol></article>
+            <article class="release-card"><div class="release-date">23 September 2026</div><h3>v1.3.0 — Catatan Rilis Terpadu</h3><p class="release-summary">Menggabungkan seluruh perubahan yang dicatat pada 23 September 2026 agar riwayat pengembangan CABEPEDES tersaji dalam satu catatan yang jelas.</p><ol id="release-v130"></ol></article>
+            <article class="release-card"><div class="release-date">23 September 2026</div><h3>v1.2.0 — Penguatan Keamanan, Audit, dan Keandalan</h3><ol id="release-v120"></ol></article>
+            <article class="release-card"><div class="release-date">20 Agustus 2026</div><h3>v1.1.0 — Fitur Dasar dan Executive Dashboard</h3><p class="release-summary">Rilis awal CABEPEDES yang membangun dasar pencatatan temuan, pemeriksaan formula workbook, dan Executive Dashboard.</p><ol id="release-v110"></ol></article>
+          </div>
+        </section>
+      </section>
+    </main>
+    <footer>Copyright© by. CSIRT KEMENKES RI <span id="footer-year"></span></footer>
+  </div>
+
+  <div id="login-wall" class="login-wall" aria-label="Login Wall" role="dialog" aria-modal="true">
+    <div class="login-backdrop"></div>
+    <div class="login-card">
+      <div class="login-logo"><img src="Logo Browser.png" alt="CABEPEDES Security"></div>
+      <div class="login-lock" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><path d="M7 10V7a5 5 0 0 1 10 0v3h1.3A1.7 1.7 0 0 1 20 11.7v8.6a1.7 1.7 0 0 1-1.7 1.7H5.7A1.7 1.7 0 0 1 4 20.3v-8.6A1.7 1.7 0 0 1 5.7 10H7Zm2 0h6V7a3 3 0 0 0-6 0v3Z"/></svg></div>
+      <div class="login-kicker">RESTRICTED CENTRAL AUDIT ACCESS</div>
+      <h1>Buka Akses CABEPEDES</h1>
+      <p class="login-copy">Masuk untuk membuka Executive Dashboard dan Data Register berdasarkan hak akses Anda.</p>
+      <form id="login-form" novalidate autocomplete="off">
+        <div class="login-field"><label for="login-role">Pilih Role</label><select id="login-role" name="role"><option value="Security Engineer">Security Engineer</option><option value="Visitor">Visitor</option></select><div class="field-error" id="role-error"></div></div>
+        <div class="login-field"><label id="login-username-label" for="login-username">Username</label><input id="login-username" name="username" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="120" placeholder="Masukkan username"><div class="field-error" id="username-error"></div></div>
+        <div class="visitor-help" id="visitor-help">Jika Anda sebagai Ketua Tim maka gunakan HURUF BESAR untuk Nama &amp; Gelar, contoh: DR. RAISA ANDRIANA, S.KOM., M.KOM</div>
+        <div class="login-field" id="password-field"><label for="login-password">Kata Sandi</label><input id="login-password" name="password" type="password" autocomplete="new-password" maxlength="200" placeholder="Masukkan kata sandi"><div class="field-error" id="password-error"></div></div>
+        <div class="field-error form-error" id="login-error"></div>
+        <button id="login-submit" class="login-btn" type="submit">Buka Akses Central Audit &amp; Bug Exploitation</button>
+      </form>
+      <div class="login-security-note"><span>●</span> Access control, session protection, audit logging &amp; security hardening aktif.</div>
+      <time id="login-clock" class="login-clock" aria-label="Tanggal dan waktu saat ini">Memuat waktu…</time>
+    </div>
+  </div>
+
+  <div id="record-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel"><div class="modal-head"><div><div class="section-kicker">DATA REGISTER</div><h2 id="modal-title">Tambah Temuan</h2></div><button class="icon-btn" data-close-modal aria-label="Tutup" type="button">×</button></div><form id="record-form" class="record-form"></form><div class="modal-foot"><button class="danger-btn" id="delete-record" type="button">Hapus</button><div class="modal-foot-right"><button class="ghost-btn" data-close-modal type="button">Batal</button><button class="primary-btn" type="submit" form="record-form">Simpan</button></div></div></div>
+  </div>
+  <div id="notification-panel" class="notification-panel hidden" role="dialog" aria-label="Notifikasi CABEPEDES">
+    <div class="notification-panel-head"><strong>Notifikasi Keamanan</strong><button id="notifications-read-all" class="ghost-btn small-btn" type="button">Tandai semua dibaca</button></div>
+    <div id="notification-list" class="notification-list"><div class="notification-empty">Belum ada notifikasi keamanan.</div></div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="logic.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

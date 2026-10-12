@@ -1,0 +1,28 @@
+# ─── Kredensial & data sensitif (JANGAN pernah di-commit) ───────────────────
+seceng.txt
+visitor.txt
+
+# ─── Data finding (mutable runtime state, dikelola di server masing-masing) ──
+data-register.json
+notifications.json
+notifications.json.bak
+
+# ─── TLS / sertifikat (di-generate ulang di tiap server) ────────────────────
+.tls/
+
+# ─── Log audit runtime ───────────────────────────────────────────────────────
+log/
+logs/
+
+# ─── Install state & lock ────────────────────────────────────────────────────
+.cabepedes-install-marker
+.cabepedes.lock
+
+# ─── macOS artifacts ─────────────────────────────────────────────────────────
+.DS_Store
+__MACOSX/
+*.app/
+
+# ─── Python cache ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]

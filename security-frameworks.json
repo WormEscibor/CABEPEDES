@@ -1,0 +1,21 @@
+{
+  "OWASP Top 10:2025": {
+    "A01": "Broken Access Control",
+    "A02": "Security Misconfiguration",
+    "A03": "Software Supply Chain Failures",
+    "A04": "Cryptographic Failures",
+    "A05": "Injection",
+    "A06": "Insecure Design",
+    "A07": "Authentication Failures",
+    "A08": "Software or Data Integrity Failures",
+    "A09": "Security Logging and Alerting Failures",
+    "A10": "Mishandling of Exceptional Conditions"
+  },
+  "OWASP ASVS": "5.0.0",
+  "ISO/IEC 27001": "2022",
+  "NIST SP 800-53": "Rev. 5 / minor release 5.2.0",
+  "NIST CSF": "2.0",
+  "CWE / SANS": "Secure coding and weakness taxonomy reference",
+  "PTES": "v1.0",
+  "statement": "Defensive control mapping / engineering implementation; not formal certification or independent pentest attestation."
+}

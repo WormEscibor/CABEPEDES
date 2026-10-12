@@ -1,0 +1,11 @@
+# Template daftar Visitor yang diizinkan akses dashboard
+# Salin file ini menjadi visitor.txt, lalu isi nama visitor.
+# JANGAN commit visitor.txt ke repo.
+#
+# Format: satu nama per baris (3–120 karakter)
+# Contoh:
+#
+# John Doe
+# Jane Smith
+
+Visitor Contoh
